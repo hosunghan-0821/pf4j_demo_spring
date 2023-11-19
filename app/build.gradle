@@ -1,0 +1,60 @@
+
+plugins {
+    id 'application'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.17'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'kr.co.wizcore'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '1.8'
+}
+
+//repositories {
+//    mavenCentral()
+//}
+
+
+mainClassName = 'kr.co.wizcore.demo.AppApplication'
+run {
+    systemProperty 'pf4j.pluginsDir', '../build/plugins'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // pf4j
+    implementation project(':api')
+    implementation group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}"
+    annotationProcessor(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}")
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+task uberjar(type: Jar, dependsOn: ['compileJava']) {
+
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    zip64 true
+    from configurations.runtimeClasspath.asFileTree.files.collect {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+        zipTree(it)
+    }
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.resources)
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+    archiveBaseName = "${project.name}-plugin-demo"
+    archiveClassifier = "uberjar"
+}

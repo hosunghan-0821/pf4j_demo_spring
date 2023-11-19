@@ -1,0 +1,13 @@
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+// plugin location
+
+ext.pluginsDir = rootProject.buildDir.path + '/plugins'
+System.out.println("테스트 : "+ext.pluginsDir)
+task build(dependsOn: [':app:uberjar'])
