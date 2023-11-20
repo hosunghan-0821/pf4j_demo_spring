@@ -1,9 +1,11 @@
 
 dependencies {
     // pf4j
-    implementation project(':api')
-    implementation group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}"
+    compileOnly project(':api')
+    compileOnly(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}") {
+        exclude group: "org.slf4j"
+    }
     annotationProcessor(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}")
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+    compileOnly (group: 'org.apache.commons', name: 'commons-lang3', version: '3.5')
 }
 

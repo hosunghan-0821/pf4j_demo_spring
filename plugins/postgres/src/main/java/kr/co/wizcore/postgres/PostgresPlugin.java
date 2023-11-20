@@ -1,4 +1,4 @@
-package kr.co.wizcore;
+package kr.co.wizcore.postgres;
 
 import kr.co.wzicore.api.Greeting;
 import org.pf4j.Extension;
@@ -10,6 +10,7 @@ public class PostgresPlugin extends Plugin {
 
     public PostgresPlugin(PluginWrapper wrapper) {
         super(wrapper);
+
     }
 
     @Override
@@ -22,12 +23,17 @@ public class PostgresPlugin extends Plugin {
         System.out.println("Postgres-Plugin.stop()");
     }
 
-    @Extension(ordinal = 1)
-    public static class HelloGreeting implements Greeting{
+    @Extension(
+            ordinal = 1
+    )
+    public static class T1 implements Greeting {
+        public T1() {
+        }
 
-        @Override
         public String getGreeting() {
-            return "Postgres";
+            return "T1";
         }
     }
+
+
 }

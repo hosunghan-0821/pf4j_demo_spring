@@ -10,7 +10,7 @@ group = 'kr.co.wizcore'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '1.8'
+    sourceCompatibility = '11'
 }
 
 //repositories {
@@ -42,6 +42,7 @@ tasks.named('test') {
 task uberjar(type: Jar, dependsOn: ['compileJava']) {
 
     duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
     zip64 true
     from configurations.runtimeClasspath.asFileTree.files.collect {
         exclude "META-INF/*.SF"
